@@ -11,9 +11,10 @@ public class Acesso implements Serializable {
     private static final long seralVersionUID = 1l;
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
+    @Column(unique = true)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String usuario;
 
     @Column(nullable = false, length = 8)
@@ -45,5 +46,21 @@ public class Acesso implements Serializable {
 
     public String getFuncao() {
         return funcao;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }
