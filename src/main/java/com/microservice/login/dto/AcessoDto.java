@@ -1,7 +1,9 @@
 package com.microservice.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class AcessoDto {
@@ -10,12 +12,17 @@ public class AcessoDto {
     private UUID id;
 
     @JsonProperty(value = "usuario")
+    @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
+    @Length(min = 5, max = 10, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String usuario;
 
     @JsonProperty(value = "senha")
+    @NotBlank(message = "O campo senha é de preenchimento obrigatório")
+    @Length(min = 5, max = 8, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String senha;
 
     @JsonProperty(value = "funcao")
+    @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
     public AcessoDto(UUID id, String usuario, String senha, String funcao) {

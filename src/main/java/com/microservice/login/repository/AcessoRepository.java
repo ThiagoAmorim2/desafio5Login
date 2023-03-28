@@ -8,5 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AcessoRepository extends JpaRepository<Acesso, UUID> {
-//    Optional<AcessoDto> findByUsuario(String usuario);
+//    Optional<AcessoDto> findByLogin(String username);
+    Optional<AcessoDto> findByUsuario(String usuario);
 }

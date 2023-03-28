@@ -11,7 +11,7 @@ public interface AcessoServiceBase {
 
     Acesso adicionarNovoAcesso(AcessoDto novoAcessoDto);
 
-    Acesso atualizarAcesso(UUID id, Acesso acesso);
+    Acesso atualizarAcesso(UUID id, AcessoDto atualizarAcessoDto);
 
     void deletarAcesso(UUID id);
 
