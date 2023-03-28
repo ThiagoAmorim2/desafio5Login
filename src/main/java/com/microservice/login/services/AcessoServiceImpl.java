@@ -6,6 +6,7 @@ import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.repository.AcessoRepository;
 import com.microservice.login.utils.AcessoMapper;
 import com.microservice.login.utils.exception.AcessoNotFoundException;
+import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,30 +30,31 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     }
 
     @Override
-    public List<Acesso> verUsuariosCadastrados() {
-        return acessoRepository.findAll();
+    public List<Acesso> verUsuariosCadastrados(AcessoDto acessoDto) throws UsuarioNaoAdminException {
+        if(acessoDto.getFuncao().equals("admin")) {
+            return acessoRepository.findAll();
+        }
+        throw new UsuarioNaoAdminException("Usuário sem permissão");
     }
 
     @Override
     @Transactional
     public Acesso adicionarNovoAcesso(@RequestBody AcessoDto novoAcessoDto) {
-        try {
-            if (novoAcessoDto.getFuncao().equals("admin")) {
 //        BCryptPasswordEncoder criptografar = new BCryptPasswordEncoder();
 //        String senhacriptografada = criptografar.encode(novoAcessoDto.getSenha());
 //        novoAcessoDto.setSenha(senhacriptografada);
-                Acesso novoAcesso = new Acesso(
-                        novoAcessoDto.getUsuario(),
-                        novoAcessoDto.getSenha(),
-                        novoAcessoDto.getFuncao());
-                return acessoRepository.save(novoAcesso);
-            }
-        }
-        catch (ResponseStatusException e){
-            e.getMessage();
-        }
-        return null;
+            Acesso novoAcesso = new Acesso(
+                    novoAcessoDto.getUsuario(),
+                    novoAcessoDto.getSenha(),
+                    novoAcessoDto.getFuncao());
+            return acessoRepository.save(novoAcesso);
     }
+
+//    public boolean eUmUsuarioValido(AcessoDto acessoDto){
+//        UUID id = acessoDto.getId();
+//        buscarAcessoPorId(id)
+//        acessoDto.getFuncao().equals(ac)
+//    }
 
     @Override
     public Acesso buscarAcessoPorId(UUID id){
@@ -63,17 +65,13 @@ public class AcessoServiceImpl implements AcessoServiceBase {
 
     @Override
     public Acesso atualizarAcesso(UUID id, AcessoDto atualizarAcessoDto){
-        AcessoMapper acessoMapper = new AcessoMapper();
-        try {
+        if(buscarAcessoPorId(atualizarAcessoDto.getId()).equals(id)) {
             Acesso acessoAtualizado = acessoMapper.ConverterAacessoDtoParaAcesso(atualizarAcessoDto);
             acessoAtualizado.setId(id);
             acessoRepository.save(acessoAtualizado);
             return acessoAtualizado;
-        } catch (RuntimeException e) {
-            e.getMessage();
-
         }
-        return null;
+        throw new AcessoNotFoundException(id);
     }
 
         @Override

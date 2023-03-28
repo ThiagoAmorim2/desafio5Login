@@ -3,6 +3,7 @@ package com.microservice.login.controller;
 import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.services.AcessoServiceImpl;
+import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,8 +29,8 @@ public class AcessoController {
     }
 
     @GetMapping(value = "/get")
-    public ResponseEntity<List<Acesso>> verUsuarios(){
-        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados());
+    public ResponseEntity<List<Acesso>> verUsuarios(@RequestBody @Valid AcessoDto acessoDto) throws UsuarioNaoAdminException {
+        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(acessoDto));
     }
 
     @PostMapping(value = "/post")
@@ -58,14 +59,15 @@ public class AcessoController {
         acessoServiceImpl.deletarAcesso(id);
     }
 
+
+    //ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidacaoException(MethodArgumentNotValidException ex){
         Map<String, String> erros = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((erro) ->{
+        ex.getBindingResult().getAllErrors().forEach((erro) -> {
                     String nomeAtributo = ((FieldError) erro).getField();
                     String messagemErro = erro.getDefaultMessage();
-
                     erros.put(nomeAtributo, messagemErro);
                 }
         );
