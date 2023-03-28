@@ -55,8 +55,8 @@ public class AcessoController {
 //    }
 
     @DeleteMapping(value = "/delete/{id}")
-    public void deletarAcesso(@PathVariable UUID id){
-        acessoServiceImpl.deletarAcesso(id);
+    public void deletarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoDto) throws UsuarioNaoAdminException {
+        acessoServiceImpl.deletarAcesso(id, acessoDto);
     }
 
 

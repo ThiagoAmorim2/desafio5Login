@@ -75,8 +75,13 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     }
 
         @Override
-        public void deletarAcesso (UUID id){
-            acessoRepository.deleteById(id);
+        public void deletarAcesso (UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException {
+            if(acessoDto.getFuncao().equals("admin")) {
+                acessoRepository.deleteById(id);
+                return;
+            }
+            throw new UsuarioNaoAdminException("Usuário sem permissão");
+
         }
     
 }
