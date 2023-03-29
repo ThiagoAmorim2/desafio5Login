@@ -2,17 +2,18 @@ package com.microservice.login.domain.acesso;
 
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public interface AcessoServiceBase {
-    List<Acesso> verUsuariosCadastrados(AcessoDto acessoDto) throws UsuarioNaoAdminException;
+    List<Acesso> verUsuariosCadastrados(UUID id) throws UsuarioNaoAdminException;
 
-    Acesso adicionarNovoAcesso(AcessoDto novoAcessoDto);
+    AcessoDto adicionarNovoAcesso(AcessoDto novoAcessoDto);
 
-    Acesso atualizarAcesso(UUID id, AcessoDto atualizarAcessoDto);
+    AcessoDto atualizarAcesso(UUID idPermissao, AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException;
 
     void deletarAcesso(UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException;
 

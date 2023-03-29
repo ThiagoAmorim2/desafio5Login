@@ -1,6 +1,9 @@
 package com.microservice.login.domain.acesso;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -15,12 +18,17 @@ public class Acesso implements Serializable {
     private UUID id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
+    @Length(min = 3, max = 10, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String usuario;
 
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false)
+    @NotBlank(message = "O campo senha é de preenchimento obrigatório")
+    @Length(min = 5, max = 8, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String senha;
 
     @Column(nullable = false)
+    @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
     public Acesso(String usuario, String senha, String funcao) {

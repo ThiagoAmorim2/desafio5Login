@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class AcessoMapper {
     public AcessoDto converterAcessoEmAcessoDto(Acesso acesso){
         AcessoDto acessoDto = new AcessoDto();
+        acessoDto.setId(acesso.getId());
         acessoDto.setUsuario(acesso.getUsuario());
         acessoDto.setSenha(acesso.getSenha());
         acessoDto.setFuncao(acesso.getFuncao());
@@ -16,6 +17,7 @@ public class AcessoMapper {
 
     public Acesso ConverterAacessoDtoParaAcesso(AcessoDto acessoDto){
         Acesso acesso = new Acesso();
+        acesso.setId(acessoDto.getId());
         acesso.setUsuario(acessoDto.getUsuario());
         acesso.setSenha(acessoDto.getSenha());
         acesso.setFuncao(acessoDto.getFuncao());

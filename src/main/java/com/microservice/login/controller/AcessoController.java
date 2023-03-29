@@ -28,32 +28,41 @@ public class AcessoController {
         this.acessoServiceImpl = acessoServiceImpl;
     }
 
-    @GetMapping(value = "/get")
-    public ResponseEntity<List<Acesso>> verUsuarios(@RequestBody @Valid AcessoDto acessoDto) throws UsuarioNaoAdminException {
-        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(acessoDto));
+    @GetMapping(value = "/get/{id}")
+    public ResponseEntity<List<Acesso>> verUsuarios(@PathVariable UUID id) throws UsuarioNaoAdminException {
+        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(id));
     }
 
     @PostMapping(value = "/post")
-    public ResponseEntity<Acesso> adicionarAcesso(@RequestBody @Valid AcessoDto novoAcessoDto){
+    public ResponseEntity<AcessoDto> adicionarAcesso(@RequestBody @Valid AcessoDto novoAcessoDto) {
         return ResponseEntity.ok(acessoServiceImpl.adicionarNovoAcesso(novoAcessoDto));
     }
 
 
-    @GetMapping(value = "/getbynome/{id}")
-    public ResponseEntity<Acesso> buscarPorId(@PathVariable UUID id){
-        return ResponseEntity.ok(acessoServiceImpl.buscarAcessoPorId(id));
-    }
+//    @GetMapping(value = "/getbynome/{id}")
+//    public ResponseEntity<AcessoDto> buscarPorId(@PathVariable UUID id){
+//        return ResponseEntity.ok(acessoServiceImpl.buscarAcessoPorId(id));
+//    }
 
     @PutMapping(value = "/put/{id}")
-    public ResponseEntity<Acesso> atualizarAcesso(@RequestBody @Valid AcessoDto atualizarAcessoDto, @PathVariable UUID id) {
-        return ResponseEntity.ok(acessoServiceImpl.atualizarAcesso(id, atualizarAcessoDto));
+    public ResponseEntity<AcessoDto> atualizarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
+        var atualizar = acessoServiceImpl.atualizarAcesso(id, acessoParaAtualizarDto);
+        return ResponseEntity.ok(atualizar);
     }
+
+
+//    @PutMapping(value = "/put/{id}/{id-atualizar}")
+//    public ResponseEntity<AcessoDto> atualizarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
+//        return ResponseEntity.ok(acessoServiceImpl.atualizarAcesso(id, acessoParaAtualizarDto));
+//    }
 
 //    @PostMapping(value = "/entrar")
 //    public ResponseEntity<UserDetails> logarOk(@RequestBody AcessoDto acessoDto){
 //        return ResponseEntity.ok().body(detalheUsuarioServiceImpl.loadUserByUsername(acessoDto.getUsuario()));
 //    }
 
+
+    //VERIFICAR O DELETE
     @DeleteMapping(value = "/delete/{id}")
     public void deletarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoDto) throws UsuarioNaoAdminException {
         acessoServiceImpl.deletarAcesso(id, acessoDto);

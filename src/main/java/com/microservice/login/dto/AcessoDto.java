@@ -12,21 +12,15 @@ public class AcessoDto {
     private UUID id;
 
     @JsonProperty(value = "usuario")
-    @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
-    @Length(min = 5, max = 10, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String usuario;
 
     @JsonProperty(value = "senha")
-    @NotBlank(message = "O campo senha é de preenchimento obrigatório")
-    @Length(min = 5, max = 8, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String senha;
 
     @JsonProperty(value = "funcao")
-    @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
-    public AcessoDto(UUID id, String usuario, String senha, String funcao) {
-        this.id = id;
+    public AcessoDto(String usuario, String senha, String funcao) {
         this.usuario = usuario;
         this.senha = senha;
         this.funcao = funcao;
@@ -61,5 +55,9 @@ public class AcessoDto {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }
