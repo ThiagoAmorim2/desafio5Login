@@ -4,6 +4,7 @@ import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.domain.acesso.AcessoServiceBase;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.repository.AcessoRepository;
+import com.microservice.login.utils.constants.AcessoConstantes;
 import com.microservice.login.utils.mappers.AcessoMapper;
 import com.microservice.login.utils.validacoes.ValidacaoUsuarioUtils;
 import com.microservice.login.utils.exception.AcessoNotFoundException;
@@ -18,9 +19,10 @@ import java.util.UUID;
 public class AcessoServiceImpl implements AcessoServiceBase {
 
     private final AcessoRepository acessoRepository;
-
     private final ValidacaoUsuarioUtils validacaoUsuarioUtils;
     private final AcessoMapper acessoMapper;
+
+    private AcessoConstantes constantes;
 
     public AcessoServiceImpl(
             AcessoRepository acessoRepository,
@@ -36,7 +38,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
         if(validacaoUsuarioUtils.ehUmUsuarioValido(acessoId)) {
             return acessoRepository.findAll();
         }//FALTA TRATAR EXCEÇÃO
-        throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
+        throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
     }
 
     @Override
@@ -64,18 +66,17 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     public AcessoDto atualizarAcesso(UUID id, AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
         Acesso acessoIdPermissao = buscarAcessoPorId(id);
         if (validacaoUsuarioUtils.ehUmUsuarioValido(acessoIdPermissao)) {
-            Acesso acessoAtualizado = new Acesso();
-                acessoAtualizado.setId(acessoParaAtualizarDto.getId());
-                acessoAtualizado.setUsuario(acessoParaAtualizarDto.getUsuario());
-                acessoAtualizado.setSenha(acessoParaAtualizarDto.getSenha());
-                acessoAtualizado.setFuncao(acessoParaAtualizarDto.getFuncao());
-            acessoRepository.save(acessoAtualizado);
-            AcessoDto acessoAtualizadoDto = acessoMapper.converterAcessoEmAcessoDto(acessoAtualizado);
+            Acesso acessoParaAtualizar = new Acesso();
+            acessoParaAtualizar.setId(acessoParaAtualizarDto.getId());
+            acessoParaAtualizar.setUsuario(acessoParaAtualizarDto.getUsuario());
+            acessoParaAtualizar.setSenha(acessoParaAtualizarDto.getSenha());
+            acessoParaAtualizar.setFuncao(acessoParaAtualizarDto.getFuncao());
+            acessoRepository.save(acessoParaAtualizar);
+            AcessoDto acessoAtualizadoDto = acessoMapper.converterAcessoEmAcessoDto(acessoParaAtualizar);
             return acessoAtualizadoDto;
         }
-        throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
+        throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
     }
-
 
         @Override
         public String deletarAcesso (UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException {
@@ -84,9 +85,9 @@ public class AcessoServiceImpl implements AcessoServiceBase {
                 Acesso acessoParaDeletar = acessoMapper.converterAcessoDtoEmAcesso(acessoDto);
                 var uuid = acessoParaDeletar.getId();
                 acessoRepository.deleteById(uuid);
-                return "Usuário deletado com sucesso!";
+                return constantes.USUARIO_DELETADO_SUCESSO;
             }
-            throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
+            throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
 
         }
     
