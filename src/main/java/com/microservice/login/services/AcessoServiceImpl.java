@@ -30,11 +30,13 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     public AcessoServiceImpl(
             AcessoRepository acessoRepository,
             ValidacaoUsuarioUtils validacaoUsuarioUtils,
-            AcessoMapper acessoMapper) {
+            AcessoMapper acessoMapper,
+            AcessoConstantes constantes) {
         this.acessoRepository = acessoRepository;
         this.validacaoUsuarioUtils = validacaoUsuarioUtils;
         this.acessoMapper = acessoMapper;
         this.passwordEncoder = passwordEncoder;
+        this.constantes = constantes;
     }
 
     @Override
@@ -94,6 +96,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
                 acessoRepository.deleteById(uuid);
                 return constantes.USUARIO_DELETADO_SUCESSO;
             }
+            //UTILIZAR ENUMS
             throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
 
         }
