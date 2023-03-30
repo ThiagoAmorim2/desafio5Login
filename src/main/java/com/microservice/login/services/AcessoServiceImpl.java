@@ -5,10 +5,12 @@ import com.microservice.login.domain.acesso.AcessoServiceBase;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.repository.AcessoRepository;
 import com.microservice.login.utils.constants.AcessoConstantes;
-import com.microservice.login.utils.mappers.AcessoMapper;
-import com.microservice.login.utils.validacoes.ValidacaoUsuarioUtils;
 import com.microservice.login.utils.exception.AcessoNotFoundException;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
+import com.microservice.login.utils.mappers.AcessoMapper;
+import com.microservice.login.utils.validacoes.ValidacaoUsuarioUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,14 +24,17 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     private final ValidacaoUsuarioUtils validacaoUsuarioUtils;
     private final AcessoMapper acessoMapper;
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private AcessoConstantes constantes;
 
     public AcessoServiceImpl(
             AcessoRepository acessoRepository,
-            ValidacaoUsuarioUtils validacaoUsuarioUtils, AcessoMapper acessoMapper) {
+            ValidacaoUsuarioUtils validacaoUsuarioUtils,
+            AcessoMapper acessoMapper) {
         this.acessoRepository = acessoRepository;
         this.validacaoUsuarioUtils = validacaoUsuarioUtils;
         this.acessoMapper = acessoMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -45,8 +50,10 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     @Transactional
     public AcessoDto adicionarNovoAcesso(AcessoDto novoAcessoDto) {
 //        BCryptPasswordEncoder criptografar = new BCryptPasswordEncoder();
-//        String senhacriptografada = criptografar.encode(novoAcesso.getSenha());
-//        novoAcesso.setSenha(senhacriptografada);
+//        String senhacriptografada = criptografar.encode(novoAcessoDto.getSenha());
+//        novoAcessoDto.setSenha(senhacriptografada);
+        String senhacriptografada = this.passwordEncoder.encode(novoAcessoDto.getSenha());
+        novoAcessoDto.setSenha(senhacriptografada);
             Acesso novoAcesso = new Acesso(
                     novoAcessoDto.getUsuario(),
                     novoAcessoDto.getSenha(),

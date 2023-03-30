@@ -24,7 +24,6 @@ public class Acesso implements Serializable {
 
     @Column(nullable = false)
     @NotBlank(message = "O campo senha é de preenchimento obrigatório")
-    @Length(min = 5, max = 8, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
     private String senha;
 
     @Column(nullable = false)
