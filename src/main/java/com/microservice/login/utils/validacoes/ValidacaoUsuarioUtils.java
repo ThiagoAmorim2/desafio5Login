@@ -1,4 +1,4 @@
-package com.microservice.login.utils;
+package com.microservice.login.utils.validacoes;
 
 import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.dto.AcessoDto;

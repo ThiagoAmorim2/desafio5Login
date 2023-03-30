@@ -1,4 +1,4 @@
-package com.microservice.login.utils;
+package com.microservice.login.utils.mappers;
 
 import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.dto.AcessoDto;
@@ -15,7 +15,7 @@ public class AcessoMapper {
         return acessoDto;
     };
 
-    public Acesso ConverterAacessoDtoParaAcesso(AcessoDto acessoDto){
+    public Acesso converterAcessoDtoEmAcesso(AcessoDto acessoDto){
         Acesso acesso = new Acesso();
         acesso.setId(acessoDto.getId());
         acesso.setUsuario(acessoDto.getUsuario());

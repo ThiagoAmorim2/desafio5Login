@@ -38,12 +38,6 @@ public class AcessoController {
         return ResponseEntity.ok(acessoServiceImpl.adicionarNovoAcesso(novoAcessoDto));
     }
 
-
-//    @GetMapping(value = "/getbynome/{id}")
-//    public ResponseEntity<AcessoDto> buscarPorId(@PathVariable UUID id){
-//        return ResponseEntity.ok(acessoServiceImpl.buscarAcessoPorId(id));
-//    }
-
     @PutMapping(value = "/put/{id}")
     public ResponseEntity<AcessoDto> atualizarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
         var atualizar = acessoServiceImpl.atualizarAcesso(id, acessoParaAtualizarDto);
@@ -51,21 +45,15 @@ public class AcessoController {
     }
 
 
-//    @PutMapping(value = "/put/{id}/{id-atualizar}")
-//    public ResponseEntity<AcessoDto> atualizarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
-//        return ResponseEntity.ok(acessoServiceImpl.atualizarAcesso(id, acessoParaAtualizarDto));
-//    }
-
 //    @PostMapping(value = "/entrar")
 //    public ResponseEntity<UserDetails> logarOk(@RequestBody AcessoDto acessoDto){
 //        return ResponseEntity.ok().body(detalheUsuarioServiceImpl.loadUserByUsername(acessoDto.getUsuario()));
 //    }
 
 
-    //VERIFICAR O DELETE
     @DeleteMapping(value = "/delete/{id}")
-    public void deletarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoDto) throws UsuarioNaoAdminException {
-        acessoServiceImpl.deletarAcesso(id, acessoDto);
+    public ResponseEntity<String> deletarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoDto) throws UsuarioNaoAdminException {
+        return ResponseEntity.ok().body(acessoServiceImpl.deletarAcesso(id, acessoDto));
     }
 
 

@@ -15,7 +15,7 @@ public interface AcessoServiceBase {
 
     AcessoDto atualizarAcesso(UUID idPermissao, AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException;
 
-    void deletarAcesso(UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException;
+    String deletarAcesso(UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException;
 
     Acesso buscarAcessoPorId(UUID id);
 
