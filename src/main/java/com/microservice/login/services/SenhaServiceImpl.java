@@ -18,16 +18,16 @@ public class SenhaServiceImpl {
         this.acessoMapper = acessoMapper;
     }
 
+    public Acesso buscarPorNome(String usuario){
+        return acessoRepository.findByUsuario(usuario);
+    }
+    public String validarSenha(AcessoDto acessoParaValidarLogin){
+        Acesso usuarioDoBancoDados = buscarPorNome(acessoParaValidarLogin.getUsuario());
 
-    public String validarSenha(AcessoDto acessoDto){
-        var usuarioDto = acessoDto.getUsuario();
-        var senhaDto = acessoDto.getSenha();
-        Acesso acessoParaVerificarUsuarioSenha = acessoMapper.converterAcessoDtoEmAcesso(acessoDto);
-        Acesso idParaVerificarUsuariSenha = acessoService.buscarAcessoPorId(acessoParaVerificarUsuarioSenha.getId());
-        var usuarioDoBanco = idParaVerificarUsuariSenha.getUsuario();
-        var senhaDoBanco = idParaVerificarUsuariSenha.getSenha();
+        var usuarioDoBanco = usuarioDoBancoDados.getUsuario();
+        var senhaDoBanco = usuarioDoBancoDados.getSenha();
 
-        if(usuarioDoBanco.equals(usuarioDto) && senhaDoBanco.equals(senhaDto)){
+        if(usuarioDoBanco.equals(acessoParaValidarLogin.getUsuario()) && senhaDoBanco.equals(acessoParaValidarLogin.getSenha())){
             return "Usuário Logado";
         }
         return "Usuário ou senha inválidos";
