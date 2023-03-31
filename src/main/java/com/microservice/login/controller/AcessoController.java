@@ -3,6 +3,7 @@ package com.microservice.login.controller;
 import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.services.AcessoServiceImpl;
+import com.microservice.login.services.SenhaServiceImpl;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,11 @@ public class AcessoController {
 
     private AcessoServiceImpl acessoServiceImpl;
 
-//    private DetalheUsuarioServiceImpl detalheUsuarioServiceImpl;
+    private SenhaServiceImpl senhaService;
 
-    public AcessoController(AcessoServiceImpl acessoServiceImpl) {
+    public AcessoController(AcessoServiceImpl acessoServiceImpl, SenhaServiceImpl senhaService) {
         this.acessoServiceImpl = acessoServiceImpl;
+        this.senhaService = senhaService;
     }
 
     @GetMapping(value = "/get/{id}")
@@ -45,10 +47,10 @@ public class AcessoController {
     }
 
 
-//    @PostMapping(value = "/entrar")
-//    public ResponseEntity<UserDetails> logarOk(@RequestBody AcessoDto acessoDto){
-//        return ResponseEntity.ok().body(detalheUsuarioServiceImpl.loadUserByUsername(acessoDto.getUsuario()));
-//    }
+    @PostMapping(value = "/entrar")
+    public ResponseEntity<String> logarOk(@RequestBody AcessoDto acessoDto){
+        return ResponseEntity.ok().body(senhaService.validarSenha(acessoDto));
+    }
 
 
     @DeleteMapping(value = "/delete/{id}")
