@@ -4,7 +4,6 @@ import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.domain.acesso.AcessoServiceBase;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.repository.AcessoRepository;
-import com.microservice.login.utils.constants.AcessoConstantes;
 import com.microservice.login.utils.exception.AcessoNotFoundException;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import com.microservice.login.utils.mappers.AcessoMapper;
@@ -25,18 +24,15 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     private final AcessoMapper acessoMapper;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private AcessoConstantes constantes;
 
     public AcessoServiceImpl(
             AcessoRepository acessoRepository,
             ValidacaoUsuarioUtils validacaoUsuarioUtils,
-            AcessoMapper acessoMapper,
-            AcessoConstantes constantes) {
+            AcessoMapper acessoMapper){
         this.acessoRepository = acessoRepository;
         this.validacaoUsuarioUtils = validacaoUsuarioUtils;
         this.acessoMapper = acessoMapper;
         this.passwordEncoder = passwordEncoder;
-        this.constantes = constantes;
     }
 
     @Override
@@ -45,7 +41,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
         if(validacaoUsuarioUtils.ehUmUsuarioValido(acessoId)) {
             return acessoRepository.findAll();
         }//FALTA TRATAR EXCEÇÃO
-        throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
+        throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
     }
 
     @Override
@@ -84,7 +80,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
             AcessoDto acessoAtualizadoDto = acessoMapper.converterAcessoEmAcessoDto(acessoParaAtualizar);
             return acessoAtualizadoDto;
         }
-        throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
+        throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
     }
 
         @Override
@@ -94,10 +90,10 @@ public class AcessoServiceImpl implements AcessoServiceBase {
                 Acesso acessoParaDeletar = acessoMapper.converterAcessoDtoEmAcesso(acessoDto);
                 var uuid = acessoParaDeletar.getId();
                 acessoRepository.deleteById(uuid);
-                return constantes.USUARIO_DELETADO_SUCESSO;
+                return "Usuário deletado com sucesso!";
             }
             //UTILIZAR ENUMS
-            throw new UsuarioNaoAdminException(constantes.USUARIO_SEM_PERMISSAO);
+            throw new UsuarioNaoAdminException("Usuário não possui esse nível de acesso");
 
         }
     
