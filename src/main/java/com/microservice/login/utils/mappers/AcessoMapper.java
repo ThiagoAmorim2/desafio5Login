@@ -9,8 +9,7 @@ public class AcessoMapper {
     public AcessoDto converterAcessoEmAcessoDto(Acesso acesso){
         AcessoDto acessoDto = new AcessoDto();
         acessoDto.setId(acesso.getId());
-        acessoDto.setUsuario(acesso.getUsuario());
-        acessoDto.setSenha(acesso.getSenha());
+        acessoDto.setNomeUsuario(acesso.getNomeUsuario());
         acessoDto.setFuncao(acesso.getFuncao());
         return acessoDto;
     };
@@ -18,8 +17,7 @@ public class AcessoMapper {
     public Acesso converterAcessoDtoEmAcesso(AcessoDto acessoDto){
         Acesso acesso = new Acesso();
         acesso.setId(acessoDto.getId());
-        acesso.setUsuario(acessoDto.getUsuario());
-        acesso.setSenha(acessoDto.getSenha());
+        acesso.setNomeUsuario(acessoDto.getNomeUsuario());
         acesso.setFuncao(acessoDto.getFuncao());
         return acesso;
     }

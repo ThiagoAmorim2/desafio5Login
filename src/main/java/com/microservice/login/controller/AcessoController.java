@@ -1,9 +1,11 @@
 package com.microservice.login.controller;
 
 import com.microservice.login.domain.acesso.Acesso;
+import com.microservice.login.services.AcessoSenhaServiceBase;
+import com.microservice.login.services.AcessoServiceBase;
 import com.microservice.login.dto.AcessoDto;
-import com.microservice.login.services.AcessoServiceImpl;
-import com.microservice.login.services.SenhaServiceImpl;
+import com.microservice.login.domain.acesso.AcessoServiceImpl;
+import com.microservice.login.domain.acesso.AcessoSenhaServiceImpl;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,11 @@ import java.util.UUID;
 @RequestMapping("/login")
 public class AcessoController {
 
-    private AcessoServiceImpl acessoServiceImpl;
+    private AcessoServiceBase acessoServiceImpl;
 
-    private SenhaServiceImpl senhaService;
+    private AcessoSenhaServiceBase senhaService;
 
-    public AcessoController(AcessoServiceImpl acessoServiceImpl, SenhaServiceImpl senhaService) {
+    public AcessoController(AcessoServiceBase acessoServiceImpl, AcessoSenhaServiceBase senhaService) {
         this.acessoServiceImpl = acessoServiceImpl;
         this.senhaService = senhaService;
     }
@@ -40,6 +42,8 @@ public class AcessoController {
         return ResponseEntity.ok(acessoServiceImpl.adicionarNovoAcesso(novoAcessoDto));
     }
 
+
+    //Ajuste na validação de senha - envio da senha sem criptografia
     @PutMapping(value = "/put/{id}")
     public ResponseEntity<AcessoDto> atualizarAcesso(@PathVariable UUID id, @RequestBody AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException {
         var atualizar = acessoServiceImpl.atualizarAcesso(id, acessoParaAtualizarDto);
@@ -47,6 +51,7 @@ public class AcessoController {
     }
 
 
+    //Httpstatus revisar retorno errado - Verificar Consistência de dados - pesquisar com ||
     @PostMapping(value = "/entrar")
     public ResponseEntity<String> logarOk(@RequestBody AcessoDto acessoDto){
         return ResponseEntity.ok().body(senhaService.validarSenha(acessoDto));

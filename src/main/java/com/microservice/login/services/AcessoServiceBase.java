@@ -1,5 +1,6 @@
-package com.microservice.login.domain.acesso;
+package com.microservice.login.services;
 
+import com.microservice.login.domain.acesso.Acesso;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 import org.springframework.stereotype.Service;
