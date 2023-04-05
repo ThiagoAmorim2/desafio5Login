@@ -28,7 +28,7 @@ public class AcessoSenhaServiceImpl implements AcessoSenhaServiceBase {
         return acessoRepository.findByNomeUsuario(nomeUsuario);
     }
     public String validarSenha(AcessoDto acessoParaValidarLogin){
-        Acesso usuarioDoBancoDados = buscarPorNome(acessoParaValidarLogin.getNomeUsuario());
+        Acesso usuarioDoBancoDados = buscarPorNome(acessoParaValidarLogin.getUsuario());
 
         var usuarioDoBanco = usuarioDoBancoDados.getNomeUsuario();
         if(usuarioDoBanco == null){
@@ -37,7 +37,7 @@ public class AcessoSenhaServiceImpl implements AcessoSenhaServiceBase {
         var senhaDoBanco = usuarioDoBancoDados.getSenha();
 
         try{
-            if(usuarioDoBanco.equals(acessoParaValidarLogin.getNomeUsuario())){
+            if(usuarioDoBanco.equals(acessoParaValidarLogin.getUsuario())){
                 if(BCrypt.checkpw(acessoParaValidarLogin.getSenha(), senhaDoBanco))
                     return "Usuário Logado";
             }

@@ -13,7 +13,7 @@ public class Acesso implements Serializable {
 
     private static final long seralVersionUID = 1l;
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private UUID id;
 
@@ -30,7 +30,8 @@ public class Acesso implements Serializable {
     @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
-    public Acesso(String nomeUsuario, String senha, String funcao) {
+    public Acesso(UUID id, String nomeUsuario, String senha, String funcao) {
+        this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.senha = senha;
         this.funcao = funcao;
@@ -43,31 +44,31 @@ public class Acesso implements Serializable {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getNomeUsuario() {
         return nomeUsuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getFuncao() {
-        return funcao;
     }
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
+    public String getFuncao() {
+        return funcao;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
     }
 }

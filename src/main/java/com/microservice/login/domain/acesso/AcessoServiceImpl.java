@@ -71,7 +71,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
         if (validacaoUsuarioUtils.ehUmUsuarioValido(acessoIdPermissao)) {
             Acesso acessoParaAtualizar = new Acesso();
             acessoParaAtualizar.setId(acessoParaAtualizarDto.getId());
-            acessoParaAtualizar.setNomeUsuario(acessoParaAtualizarDto.getNomeUsuario());
+            acessoParaAtualizar.setNomeUsuario(acessoParaAtualizarDto.getUsuario());
             acessoParaAtualizar.setSenha(acessoParaAtualizarDto.getSenha());
             acessoParaAtualizar.setFuncao(acessoParaAtualizarDto.getFuncao());
             acessoRepository.save(acessoParaAtualizar);
