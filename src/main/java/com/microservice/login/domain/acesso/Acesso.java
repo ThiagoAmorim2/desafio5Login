@@ -20,7 +20,7 @@ public class Acesso implements Serializable {
     @Column(nullable = false, unique = true)
     @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
     @Length(min = 3, max = 10, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
-    private String nomeUsuario;
+    private String usuario;
 
     @Column(nullable = false)
     @NotBlank(message = "O campo senha é de preenchimento obrigatório")
@@ -32,7 +32,7 @@ public class Acesso implements Serializable {
 
     public Acesso(UUID id, String nomeUsuario, String senha, String funcao) {
         this.id = id;
-        this.nomeUsuario = nomeUsuario;
+        this.usuario = nomeUsuario;
         this.senha = senha;
         this.funcao = funcao;
     }
@@ -49,11 +49,11 @@ public class Acesso implements Serializable {
     }
 
     public String getNomeUsuario() {
-        return nomeUsuario;
+        return usuario;
     }
 
     public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+        this.usuario = nomeUsuario;
     }
 
     public String getSenha() {

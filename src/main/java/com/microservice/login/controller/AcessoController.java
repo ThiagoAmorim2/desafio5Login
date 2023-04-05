@@ -63,18 +63,4 @@ public class AcessoController {
         return ResponseEntity.ok().body(acessoServiceImpl.deletarAcesso(id, acessoDto));
     }
 
-
-    //ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidacaoException(MethodArgumentNotValidException ex){
-        Map<String, String> erros = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((erro) -> {
-                    String nomeAtributo = ((FieldError) erro).getField();
-                    String messagemErro = erro.getDefaultMessage();
-                    erros.put(nomeAtributo, messagemErro);
-                }
-        );
-        return erros;
-    }
 }
