@@ -13,14 +13,14 @@ public class Acesso implements Serializable {
 
     private static final long seralVersionUID = 1l;
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private UUID id;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
     @Length(min = 3, max = 10, message = "O tamanho mínimo do campo é {min} e o máximo é {max}")
-    private String nomeUsuario;
+    private String usuario;
 
     @Column(nullable = false)
     @NotBlank(message = "O campo senha é de preenchimento obrigatório")
@@ -30,8 +30,9 @@ public class Acesso implements Serializable {
     @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
-    public Acesso(String nomeUsuario, String senha, String funcao) {
-        this.nomeUsuario = nomeUsuario;
+    public Acesso(UUID id, String nomeUsuario, String senha, String funcao) {
+        this.id = id;
+        this.usuario = nomeUsuario;
         this.senha = senha;
         this.funcao = funcao;
     }
@@ -43,31 +44,31 @@ public class Acesso implements Serializable {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getNomeUsuario() {
-        return nomeUsuario;
+        return usuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.usuario = nomeUsuario;
     }
 
     public String getSenha() {
         return senha;
     }
 
-    public String getFuncao() {
-        return funcao;
-    }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
+    public String getFuncao() {
+        return funcao;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
     }
 }

@@ -1,9 +1,7 @@
 package com.microservice.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class AcessoDto {
@@ -11,8 +9,8 @@ public class AcessoDto {
     @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty(value = "nome_usuario")
-    private String nomeUsuario;
+    @JsonProperty(value = "usuario")
+    private String usuario;
 
     @JsonProperty(value = "senha")
     private String senha;
@@ -20,8 +18,8 @@ public class AcessoDto {
     @JsonProperty(value = "funcao")
     private String funcao;
 
-    public AcessoDto(String nomeUsuario, String senha, String funcao) {
-        this.nomeUsuario = nomeUsuario;
+    public AcessoDto(String usuario, String senha, String funcao) {
+        this.usuario = usuario;
         this.senha = senha;
         this.funcao = funcao;
     }
@@ -29,12 +27,12 @@ public class AcessoDto {
     public AcessoDto() {
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNomeUsuario(String usuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {
