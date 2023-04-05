@@ -11,8 +11,8 @@ public class AcessoDto {
     @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty(value = "usuario")
-    private String usuario;
+    @JsonProperty(value = "nome_usuario")
+    private String nomeUsuario;
 
     @JsonProperty(value = "senha")
     private String senha;
@@ -20,8 +20,8 @@ public class AcessoDto {
     @JsonProperty(value = "funcao")
     private String funcao;
 
-    public AcessoDto(String usuario, String senha, String funcao) {
-        this.usuario = usuario;
+    public AcessoDto(String nomeUsuario, String senha, String funcao) {
+        this.nomeUsuario = nomeUsuario;
         this.senha = senha;
         this.funcao = funcao;
     }
@@ -29,12 +29,12 @@ public class AcessoDto {
     public AcessoDto() {
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setNomeUsuario(String usuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public String getSenha() {

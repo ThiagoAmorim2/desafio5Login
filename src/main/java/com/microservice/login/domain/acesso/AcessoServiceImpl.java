@@ -1,7 +1,6 @@
-package com.microservice.login.services;
+package com.microservice.login.domain.acesso;
 
-import com.microservice.login.domain.acesso.Acesso;
-import com.microservice.login.domain.acesso.AcessoServiceBase;
+import com.microservice.login.services.AcessoServiceBase;
 import com.microservice.login.dto.AcessoDto;
 import com.microservice.login.repository.AcessoRepository;
 import com.microservice.login.utils.exception.AcessoNotFoundException;
@@ -47,15 +46,14 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     @Override
     @Transactional
     public AcessoDto adicionarNovoAcesso(AcessoDto novoAcessoDto) {
-//        BCryptPasswordEncoder criptografar = new BCryptPasswordEncoder();
-//        String senhacriptografada = criptografar.encode(novoAcessoDto.getSenha());
-//        novoAcessoDto.setSenha(senhacriptografada);
+        //Criptografia da senha
         String senhacriptografada = this.passwordEncoder.encode(novoAcessoDto.getSenha());
-        novoAcessoDto.setSenha(senhacriptografada);
-            Acesso novoAcesso = new Acesso(
-                    novoAcessoDto.getUsuario(),
-                    novoAcessoDto.getSenha(),
-                    novoAcessoDto.getFuncao());
+
+        //Criação do model
+        Acesso novoAcesso = acessoMapper.converterAcessoDtoEmAcesso(novoAcessoDto);
+        novoAcesso.setSenha(senhacriptografada);
+
+        //Salvar
             acessoRepository.save(novoAcesso);
             AcessoDto acessoDto = acessoMapper.converterAcessoEmAcessoDto(novoAcesso);
             return acessoDto;
@@ -73,7 +71,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
         if (validacaoUsuarioUtils.ehUmUsuarioValido(acessoIdPermissao)) {
             Acesso acessoParaAtualizar = new Acesso();
             acessoParaAtualizar.setId(acessoParaAtualizarDto.getId());
-            acessoParaAtualizar.setUsuario(acessoParaAtualizarDto.getUsuario());
+            acessoParaAtualizar.setNomeUsuario(acessoParaAtualizarDto.getNomeUsuario());
             acessoParaAtualizar.setSenha(acessoParaAtualizarDto.getSenha());
             acessoParaAtualizar.setFuncao(acessoParaAtualizarDto.getFuncao());
             acessoRepository.save(acessoParaAtualizar);
