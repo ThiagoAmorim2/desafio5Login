@@ -17,16 +17,16 @@ import org.hibernate.validator.constraints.Length;
 @NamedNativeQueries({
     @NamedNativeQuery(
         name = "Acesso.buscarTodosAcessos",
-        query = "SELECT * FROM TB_LOGIN WHERE usuario LIKE :usuario"
+        query = "SELECT * FROM tb_login WHERE usuario LIKE :usuario"
     ),
     @NamedNativeQuery(
         name = "Acesso.contagemTodosAcessos",
-        query = "SELECT COUNT(*) FROM TB_LOGIN WHERE usuario LIKE :usuario"
+        query = "SELECT COUNT(*) FROM tb_login WHERE usuario LIKE :usuario"
     )
 })
 
 @Entity
-@Table(name = "TB_LOGIN")
+@Table(name = "tb_login")
 public class AcessoDAO implements Serializable {
 
     private static final long seralVersionUID = 1l;

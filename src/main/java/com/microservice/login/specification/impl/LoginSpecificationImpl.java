@@ -13,7 +13,6 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
 
 import com.microservice.login.domain.acesso.AcessoDAO;
 import com.microservice.login.dto.AcessoFiltroUsuarioDTO;
@@ -41,8 +40,8 @@ public class LoginSpecificationImpl implements LoginSpecification {
     public Page<AcessoDAO> buscarTodosAcessos(PaginacaoRequestDTO paginacaoRequestDTO, AcessoFiltroUsuarioDTO usuarioDTO) {
         TypedQuery<Tuple> query = entityManager.createNamedQuery("Acesso.buscarTodosAcessos", Tuple.class);
         List<Tuple> result = query
-                    .setParameter("sort", paginacaoRequestDTO.getSort())
                     .setParameter("usuario", usuarioDTO.getUsuario())
+                    .setParameter("sort", paginacaoRequestDTO.getSort())
                     .setFirstResult(paginacaoRequestDTO.getOffset())
                     .setMaxResults(paginacaoRequestDTO.getLimit())
                     .getResultList();

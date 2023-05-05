@@ -1,27 +1,26 @@
 package com.microservice.login.controller;
 
-import com.microservice.login.domain.acesso.AcessoDAO;
-import com.microservice.login.services.AcessoSenhaServiceBase;
-import com.microservice.login.services.AcessoServiceBase;
+import javax.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.microservice.login.dto.AcessoDTO;
 import com.microservice.login.dto.AcessoFiltroUsuarioDTO;
 import com.microservice.login.dto.AcessoResponseDTO;
 import com.microservice.login.dto.ListaGenericaResponseDTO;
 import com.microservice.login.dto.PaginacaoRequestDTO;
-import com.microservice.login.domain.acesso.AcessoServiceImpl;
-import com.microservice.login.domain.acesso.AcessoSenhaServiceImpl;
+import com.microservice.login.services.AcessoSenhaServiceBase;
+import com.microservice.login.services.AcessoServiceBase;
 import com.microservice.login.utils.exception.UsuarioNaoAdminException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/login")
@@ -39,9 +38,12 @@ public class AcessoController {
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<ListaGenericaResponseDTO<AcessoResponseDTO>> verUsuarios(
                                     @PathVariable Long id, 
-                                    @RequestParam PaginacaoRequestDTO paginacao,
-                                    @RequestParam AcessoFiltroUsuarioDTO filtro) throws UsuarioNaoAdminException {
-        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(id, paginacao, filtro));
+                                    @RequestParam(value = "usuario") String usuario,
+                                    @RequestParam(value = "sort") String sort) throws UsuarioNaoAdminException {
+        AcessoFiltroUsuarioDTO filtroUsuarioDTO = new AcessoFiltroUsuarioDTO(usuario);
+        PaginacaoRequestDTO paginacao = new PaginacaoRequestDTO();
+        paginacao.setSort(sort);
+        return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(id, paginacao, filtroUsuarioDTO));
     }
 
     @PostMapping(value = "/post")

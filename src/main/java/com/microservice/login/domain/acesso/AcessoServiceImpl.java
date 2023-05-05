@@ -52,6 +52,8 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     public ListaGenericaResponseDTO<AcessoResponseDTO> verUsuariosCadastrados(Long id, PaginacaoRequestDTO paginacao, AcessoFiltroUsuarioDTO filtro) throws UsuarioNaoAdminException {
         AcessoDAO acessoId = buscarAcessoPorId(id);
         if(validacaoUsuarioUtils.ehUmUsuarioValido(acessoId)) {
+            paginacao.setLimit(20);
+            paginacao.setOffset(0);
             Page<AcessoDAO> acessosPage = acessoRepository.buscarTodosAcessos(paginacao, filtro);
             return listaGenericaResponseDTOMapper.fromPage(acessosPage, AcessoResponseDTO.class);
         }

@@ -1,7 +1,5 @@
 package com.microservice.login.services;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.microservice.login.domain.acesso.AcessoDAO;
