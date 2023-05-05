@@ -38,11 +38,12 @@ public class AcessoController {
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<ListaGenericaResponseDTO<AcessoResponseDTO>> verUsuarios(
                                     @PathVariable Long id, 
-                                    @RequestParam(value = "usuario") String usuario,
-                                    @RequestParam(value = "sort") String sort) throws UsuarioNaoAdminException {
+                                    @RequestParam(value = "usuario") String usuario)
+                                    // @RequestParam(value = "sort") String sort) throws UsuarioNaoAdminException {
+                                        throws UsuarioNaoAdminException {
         AcessoFiltroUsuarioDTO filtroUsuarioDTO = new AcessoFiltroUsuarioDTO(usuario);
         PaginacaoRequestDTO paginacao = new PaginacaoRequestDTO();
-        paginacao.setSort(sort);
+        // paginacao.setSort(sort);
         return ResponseEntity.ok().body(acessoServiceImpl.verUsuariosCadastrados(id, paginacao, filtroUsuarioDTO));
     }
 

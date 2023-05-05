@@ -41,7 +41,7 @@ public class LoginSpecificationImpl implements LoginSpecification {
         TypedQuery<Tuple> query = entityManager.createNamedQuery("Acesso.buscarTodosAcessos", Tuple.class);
         List<Tuple> result = query
                     .setParameter("usuario", usuarioDTO.getUsuario())
-                    .setParameter("sort", paginacaoRequestDTO.getSort())
+                    // .setParameter("sort", paginacaoRequestDTO.getSort())
                     .setFirstResult(paginacaoRequestDTO.getOffset())
                     .setMaxResults(paginacaoRequestDTO.getLimit())
                     .getResultList();
