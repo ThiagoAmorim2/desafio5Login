@@ -1,15 +1,15 @@
 package com.microservice.login.domain.acesso;
 
-import com.microservice.login.dto.AcessoDto;
-import com.microservice.login.repository.AcessoRepository;
-import com.microservice.login.services.AcessoSenhaServiceBase;
-import com.microservice.login.utils.exception.SenhaIncorretaException;
-import com.microservice.login.utils.exception.UsuarioNaoExisteException;
-import com.microservice.login.utils.mappers.AcessoMapper;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.microservice.login.dto.AcessoDTO;
+import com.microservice.login.repository.AcessoRepository;
+import com.microservice.login.services.AcessoSenhaServiceBase;
+import com.microservice.login.utils.exception.SenhaIncorretaException;
+import com.microservice.login.utils.exception.UsuarioNaoExisteException;
 
 
 @Service
@@ -25,11 +25,11 @@ public class AcessoSenhaServiceImpl implements AcessoSenhaServiceBase {
 
     }
 
-    public Acesso buscarPorNome(String usuario){
+    public AcessoDAO buscarPorNome(String usuario){
         return acessoRepository.findByUsuario(usuario);
     }
-    public String validarSenha(AcessoDto acessoParaValidarLogin){
-        Acesso usuarioDoBancoDados = buscarPorNome(acessoParaValidarLogin.getUsuario());
+    public String validarSenha(AcessoDTO acessoParaValidarLogin){
+        AcessoDAO usuarioDoBancoDados = buscarPorNome(acessoParaValidarLogin.getUsuario());
 
         if(usuarioDoBancoDados == null){
             throw new UsuarioNaoExisteException("Usuário " + acessoParaValidarLogin.getUsuario() + " não existe");

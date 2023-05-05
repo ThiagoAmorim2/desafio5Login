@@ -1,11 +1,11 @@
 package com.microservice.login.services;
 
-import com.microservice.login.domain.acesso.Acesso;
-import com.microservice.login.dto.AcessoDto;
+import com.microservice.login.domain.acesso.AcessoDAO;
+import com.microservice.login.dto.AcessoDTO;
 
 public interface AcessoSenhaServiceBase {
 
-    Acesso buscarPorNome(String nomeUsuario);
+    AcessoDAO buscarPorNome(String nomeUsuario);
 
-    String validarSenha(AcessoDto acessoParaValidarLogin);
+    String validarSenha(AcessoDTO acessoParaValidarLogin);
 }

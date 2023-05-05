@@ -1,21 +1,39 @@
 package com.microservice.login.domain.acesso;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.util.UUID;
+@NamedNativeQueries({
+    @NamedNativeQuery(
+        name = "Acesso.buscarTodosAcessos",
+        query = "SELECT * FROM TB_LOGIN WHERE usuario LIKE :usuario"
+    ),
+    @NamedNativeQuery(
+        name = "Acesso.contagemTodosAcessos",
+        query = "SELECT COUNT(*) FROM TB_LOGIN WHERE usuario LIKE :usuario"
+    )
+})
 
 @Entity
 @Table(name = "TB_LOGIN")
-public class Acesso implements Serializable {
+public class AcessoDAO implements Serializable {
 
     private static final long seralVersionUID = 1l;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "O campo usuário é de preenchimento obrigatório")
@@ -30,21 +48,21 @@ public class Acesso implements Serializable {
     @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
-    public Acesso(UUID id, String nomeUsuario, String senha, String funcao) {
+    public AcessoDAO(Long id, String nomeUsuario, String senha, String funcao) {
         this.id = id;
         this.usuario = nomeUsuario;
         this.senha = senha;
         this.funcao = funcao;
     }
 
-    public Acesso() {
+    public AcessoDAO() {
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

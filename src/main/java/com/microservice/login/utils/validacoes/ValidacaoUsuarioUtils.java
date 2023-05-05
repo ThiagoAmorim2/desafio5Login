@@ -1,12 +1,12 @@
 package com.microservice.login.utils.validacoes;
 
-import com.microservice.login.domain.acesso.Acesso;
-import com.microservice.login.dto.AcessoDto;
 import org.springframework.stereotype.Component;
+
+import com.microservice.login.domain.acesso.AcessoDAO;
 
 @Component
 public class ValidacaoUsuarioUtils {
-    public boolean ehUmUsuarioValido(Acesso acesso){
+    public boolean ehUmUsuarioValido(AcessoDAO acesso){
         if(acesso.getFuncao().equals("admin")) {
             return true;
         }

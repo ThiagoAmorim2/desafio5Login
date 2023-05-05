@@ -1,24 +1,29 @@
 package com.microservice.login.services;
 
-import com.microservice.login.domain.acesso.Acesso;
-import com.microservice.login.dto.AcessoDto;
-import com.microservice.login.utils.exception.UsuarioNaoAdminException;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.microservice.login.domain.acesso.AcessoDAO;
+import com.microservice.login.dto.AcessoDTO;
+import com.microservice.login.dto.AcessoFiltroUsuarioDTO;
+import com.microservice.login.dto.AcessoResponseDTO;
+import com.microservice.login.dto.ListaGenericaResponseDTO;
+import com.microservice.login.dto.PaginacaoRequestDTO;
+import com.microservice.login.utils.exception.UsuarioNaoAdminException;
 
 @Service
 public interface AcessoServiceBase {
-    List<Acesso> verUsuariosCadastrados(UUID id) throws UsuarioNaoAdminException;
+    // List<AcessoDAO> verUsuariosCadastrados(Long id) throws UsuarioNaoAdminException;
+    public ListaGenericaResponseDTO<AcessoResponseDTO> verUsuariosCadastrados(Long id, PaginacaoRequestDTO paginacao, AcessoFiltroUsuarioDTO filtro) throws UsuarioNaoAdminException;
 
-    AcessoDto adicionarNovoAcesso(AcessoDto novoAcessoDto);
+    AcessoDTO adicionarNovoAcesso(AcessoDTO novoAcessoDto);
 
-    AcessoDto atualizarAcesso(UUID idPermissao, AcessoDto acessoParaAtualizarDto) throws UsuarioNaoAdminException;
+    AcessoDTO atualizarAcesso(Long idPermissao, AcessoDTO acessoParaAtualizarDto) throws UsuarioNaoAdminException;
 
-    String deletarAcesso(UUID id, AcessoDto acessoDto) throws UsuarioNaoAdminException;
+    String deletarAcesso(Long id, AcessoDTO acessoDto) throws UsuarioNaoAdminException;
 
-    Acesso buscarAcessoPorId(UUID id);
+    AcessoDAO buscarAcessoPorId(Long id);
 
 
 }

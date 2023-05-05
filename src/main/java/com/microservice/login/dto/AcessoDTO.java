@@ -2,12 +2,11 @@ package com.microservice.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
 
-public class AcessoDto {
+public class AcessoDTO {
 
     @JsonProperty(value = "id")
-    private UUID id;
+    private Long id;
 
     @JsonProperty(value = "usuario")
     private String usuario;
@@ -18,13 +17,13 @@ public class AcessoDto {
     @JsonProperty(value = "funcao")
     private String funcao;
 
-    public AcessoDto(String usuario, String senha, String funcao) {
+    public AcessoDTO(String usuario, String senha, String funcao) {
         this.usuario = usuario;
         this.senha = senha;
         this.funcao = funcao;
     }
 
-    public AcessoDto() {
+    public AcessoDTO() {
     }
 
     public String getUsuario() {
@@ -51,11 +50,11 @@ public class AcessoDto {
         this.funcao = funcao;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
