@@ -5,7 +5,7 @@ import com.microservice.login.dto.AcessoDTO;
 
 public interface AcessoSenhaServiceBase {
 
-    AcessoDAO buscarPorNome(String nomeUsuario);
+    AcessoDAO buscarPorNome(String usuario);
 
     String validarSenha(AcessoDTO acessoParaValidarLogin);
 }

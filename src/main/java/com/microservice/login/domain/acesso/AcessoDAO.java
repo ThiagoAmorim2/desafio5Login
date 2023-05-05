@@ -29,7 +29,7 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "tb_login")
 public class AcessoDAO implements Serializable {
 
-    private static final long seralVersionUID = 1l;
+    private static final long seralVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
@@ -48,9 +48,9 @@ public class AcessoDAO implements Serializable {
     @NotBlank(message = "O campo função é de preenchimento obrigatório")
     private String funcao;
 
-    public AcessoDAO(Long id, String nomeUsuario, String senha, String funcao) {
+    public AcessoDAO(Long id, String usuario, String senha, String funcao) {
         this.id = id;
-        this.usuario = nomeUsuario;
+        this.usuario = usuario;
         this.senha = senha;
         this.funcao = funcao;
     }
@@ -66,12 +66,12 @@ public class AcessoDAO implements Serializable {
         this.id = id;
     }
 
-    public String getNomeUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.usuario = nomeUsuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {

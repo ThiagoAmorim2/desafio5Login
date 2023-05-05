@@ -1,7 +1,5 @@
 package com.microservice.login.domain.acesso;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -30,20 +28,16 @@ public class AcessoServiceImpl implements AcessoServiceBase {
     private final AcessoMapper acessoMapper;
     private final ListaGenericaResponseDTOMapper listaGenericaResponseDTOMapper;
 
-    private AcessoSenhaServiceImpl acessoSenhaService;
-
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public AcessoServiceImpl(
             AcessoRepository acessoRepository,
             ValidacaoUsuarioUtils validacaoUsuarioUtils,
             AcessoMapper acessoMapper,
-            ListaGenericaResponseDTOMapper listaGenericaResponseDTOMapper,
-            AcessoSenhaServiceImpl acessoSenhaService){
+            ListaGenericaResponseDTOMapper listaGenericaResponseDTOMapper){
         this.acessoRepository = acessoRepository;
         this.validacaoUsuarioUtils = validacaoUsuarioUtils;
         this.acessoMapper = acessoMapper;
-        this.acessoSenhaService = acessoSenhaService;
         this.listaGenericaResponseDTOMapper = listaGenericaResponseDTOMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -57,7 +51,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
             Page<AcessoDAO> acessosPage = acessoRepository.buscarTodosAcessos(paginacao, filtro);
             return listaGenericaResponseDTOMapper.fromPage(acessosPage, AcessoResponseDTO.class);
         }
-        throw new UsuarioNaoAdminException("Usuário " + acessoId.getNomeUsuario() + " não possui esse nível de acesso");
+        throw new UsuarioNaoAdminException("Usuário " + acessoId.getUsuario() + " não possui esse nível de acesso");
     }
 
     @Override
@@ -88,14 +82,14 @@ public class AcessoServiceImpl implements AcessoServiceBase {
         if (validacaoUsuarioUtils.ehUmUsuarioValido(acessoIdPermissao)) {
             AcessoDAO acessoParaAtualizar = new AcessoDAO();
             acessoParaAtualizar.setId(acessoParaAtualizarDto.getId());
-            acessoParaAtualizar.setNomeUsuario(acessoParaAtualizarDto.getUsuario());
+            acessoParaAtualizar.setUsuario(acessoParaAtualizarDto.getUsuario());
             acessoParaAtualizar.setSenha(acessoParaAtualizarDto.getSenha());
             acessoParaAtualizar.setFuncao(acessoParaAtualizarDto.getFuncao());
             acessoRepository.save(acessoParaAtualizar);
             AcessoDTO acessoAtualizadoDto = acessoMapper.converterAcessoEmAcessoDto(acessoParaAtualizar);
             return acessoAtualizadoDto;
         }
-        throw new UsuarioNaoAdminException("Usuário " + acessoIdPermissao.getNomeUsuario() + " não possui esse nível de acesso");
+        throw new UsuarioNaoAdminException("Usuário " + acessoIdPermissao.getUsuario() + " não possui esse nível de acesso");
     }
 
         @Override
@@ -108,7 +102,7 @@ public class AcessoServiceImpl implements AcessoServiceBase {
                 return "Usuário deletado com sucesso!";
             }
             //UTILIZAR ENUMS
-            throw new UsuarioNaoAdminException("Usuário " + acessoIdPermissao.getNomeUsuario() + " não possui esse nível de acesso");
+            throw new UsuarioNaoAdminException("Usuário " + acessoIdPermissao.getUsuario() + " não possui esse nível de acesso");
 
         }
     

@@ -18,7 +18,7 @@ public class AcessoMapper {
     public AcessoDTO converterAcessoEmAcessoDto(AcessoDAO acesso){
         AcessoDTO acessoDto = new AcessoDTO();
         acessoDto.setId(acesso.getId());
-        acessoDto.setUsuario(acesso.getNomeUsuario());
+        acessoDto.setUsuario(acesso.getUsuario());
         acessoDto.setSenha(acesso.getSenha());
         acessoDto.setFuncao(acesso.getFuncao());
         return acessoDto;
@@ -27,7 +27,7 @@ public class AcessoMapper {
     public AcessoDAO converterAcessoDtoEmAcesso(AcessoDTO acessoDto){
         AcessoDAO acesso = new AcessoDAO();
         acesso.setId(acessoDto.getId());
-        acesso.setNomeUsuario(acessoDto.getUsuario());
+        acesso.setUsuario(acessoDto.getUsuario());
         acesso.setSenha(acessoDto.getSenha());
         acesso.setFuncao(acessoDto.getFuncao());
         return acesso;
@@ -38,7 +38,7 @@ public class AcessoMapper {
         for(Tuple tupla : tuplas){
             AcessoDAO acessoDAO = new AcessoDAO();
             acessoDAO.setId(toLong(tupla.get("id"), null));
-            acessoDAO.setNomeUsuario(toString(tupla.get("usuario"), null));
+            acessoDAO.setUsuario(toString(tupla.get("usuario"), null));
             acessoDAO.setSenha(toString(tupla.get("senha"), null));
             acessoDAO.setFuncao(toString(tupla.get("funcao"), null));
             resultado.add(acessoDAO);

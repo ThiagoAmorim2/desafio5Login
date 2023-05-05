@@ -40,7 +40,7 @@ public class LoginSpecificationImpl implements LoginSpecification {
     public Page<AcessoDAO> buscarTodosAcessos(PaginacaoRequestDTO paginacaoRequestDTO, AcessoFiltroUsuarioDTO usuarioDTO) {
         TypedQuery<Tuple> query = entityManager.createNamedQuery("Acesso.buscarTodosAcessos", Tuple.class);
         List<Tuple> result = query
-                    .setParameter("usuario", usuarioDTO.getUsuario())
+                    .setParameter("usuario", queryUtils.parametroContemOValor(usuarioDTO.getUsuario()))
                     // .setParameter("sort", paginacaoRequestDTO.getSort())
                     .setFirstResult(paginacaoRequestDTO.getOffset())
                     .setMaxResults(paginacaoRequestDTO.getLimit())

@@ -35,7 +35,7 @@ public class AcessoSenhaServiceImpl implements AcessoSenhaServiceBase {
             throw new UsuarioNaoExisteException("Usuário " + acessoParaValidarLogin.getUsuario() + " não existe");
         }
 
-        var usuarioDoBanco = usuarioDoBancoDados.getNomeUsuario();
+        var usuarioDoBanco = usuarioDoBancoDados.getUsuario();
 
         var senhaDoBanco = usuarioDoBancoDados.getSenha();
 

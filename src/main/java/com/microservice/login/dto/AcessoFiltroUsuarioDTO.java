@@ -2,8 +2,6 @@ package com.microservice.login.dto;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.NonNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class AcessoFiltroUsuarioDTO {
     
-    @NonNull
+    @NotNull
     private String usuario;
 
     public AcessoFiltroUsuarioDTO(@NotNull String usuario) {
