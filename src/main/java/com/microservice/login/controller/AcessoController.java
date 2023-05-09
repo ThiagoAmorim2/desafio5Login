@@ -61,7 +61,7 @@ public class AcessoController {
     }
 
 
-    //Httpstatus revisar retorno errado - Verificar Consistência de dados - pesquisar com ||
+    
     @PostMapping(value = "/entrar")
     public ResponseEntity<String> logarOk(@RequestBody AcessoDTO acessoDto){
         return ResponseEntity.ok().body(senhaService.validarSenha(acessoDto));
